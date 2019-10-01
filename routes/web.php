@@ -20,3 +20,5 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('todo', 'Todo\TodoController');
+
+Route::get('queries', 'Example\QueriesController@query');
