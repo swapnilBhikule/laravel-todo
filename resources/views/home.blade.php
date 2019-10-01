@@ -21,6 +21,8 @@
                         </div>
                     @endif
 
+                    <p class="text-muted text-center w-100 h4 mb-4" v-if="ajax_loading">Loading...</p>
+
                     <ul class="list-group" v-if="todos.length > 0">
                         <li v-for="todo in todos" :key="todo.id" class="list-group-item d-flex justify-content-between align-items-center"
                             :class="todo.is_complete ? 'list-group-item-success' : ''">

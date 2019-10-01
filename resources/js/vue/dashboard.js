@@ -1,11 +1,15 @@
+import Preloader from '../components/Preloader';
+
 new Vue({
+	components: {Preloader},
 	el: '#app',
 	data: {
 		todos: [],
 		task: '',
 		updated_todo: {
 			task: ''
-		}
+		},
+		ajax_loading: true
 	},
 	mounted() {
 		this.loadInitialData();
@@ -14,11 +18,15 @@ new Vue({
 		loadInitialData() {
 			axios.get('/todo')
 				.then(response => {
+					this.ajax_loading = false;
+
 					if (response.status === 200 && response.data.error === false) {
 						this.todos = response.data.data;
 					}
 				})
 				.catch(error => {
+					this.ajax_loading = false;
+
 					console.log(error);
 				});
 		},
@@ -29,10 +37,14 @@ new Vue({
 				return;
 			}
 
+			this.ajax_loading = true;
+
 			axios.post('/todo', {
 				task: this.task
 			})
 				.then(response => {
+					this.ajax_loading = false;
+
 					if (response.status === 200 && response.data.error === false) {
 						this.todos.push(response.data.data);
 						this.task = '';
@@ -41,6 +53,8 @@ new Vue({
 					}
 				})
 				.catch(error => {
+					this.ajax_loading = false;
+
 					console.log(error);
 				});
 		},

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Todo;
 
 use App\Models\Todo;
 use Illuminate\Http\Request;
+use App\Jobs\SendNewTodoMail;
 use App\Http\Controllers\Controller;
 
 class TodoController extends Controller
@@ -73,6 +74,11 @@ class TodoController extends Controller
         $todo = $todo->toArray();
 
         if ($todo) {
+            SendNewTodoMail::dispatch([
+                'email' => auth()->user()->email,
+                'data'  => $todo
+            ]);
+
             return response()->json([
                 'error' => false,
                 'data'  => $todo
@@ -159,7 +165,7 @@ class TodoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id)
     {
         $flag = $this->model->where('id', '=', $id)
             ->where('user_id', '=', auth()->user()->id)
