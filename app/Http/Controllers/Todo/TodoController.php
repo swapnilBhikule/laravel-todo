@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Jobs\SendNewTodoMail;
 use App\Http\Controllers\Controller;
 
+use App\Events\TodoCompleted;
+
 class TodoController extends Controller
 {
     /**
@@ -151,6 +153,12 @@ class TodoController extends Controller
                 'error' => true,
                 'message' => 'Looks like this todo does not belongs to you.'
             ]);
+        }
+
+        if ($request->has('is_complete')) {
+            event(new TodoCompleted([
+                'user' => auth()->user()->name
+            ]));
         }
 
         return response()->json([

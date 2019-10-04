@@ -18,6 +18,11 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+
+        'App\Events\TodoCompleted' => [
+            'App\Listeners\SendConfirmationMail',
+            'App\Listeners\SendConfirmationSMS'
+        ]
     ];
 
     /**
