@@ -10,6 +10,7 @@ This is just a sample todo application made with Laravel 6 and VueJS.
 - Composer
 
 #### Installation Process
+----
 Navigate to your apache's root directory and clone the repository with following command:<br/>
 `git clone https://github.com/swapnilBhikule/laravel-todo.git`<br/>
 ----
